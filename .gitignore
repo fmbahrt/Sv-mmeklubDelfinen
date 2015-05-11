@@ -46,3 +46,33 @@ Desktop.ini
 # Locally stored "Eclipse launch configurations"
 *.launch
 
+
+.recommenders/repository/http___download_eclipse_org_recommenders_models_luna_/org/eclipse/recommenders/index/0.0.0-SNAPSHOT/resolver-status.properties
+
+.recommenders/repository/http___download_eclipse_org_recommenders_models_luna_/org/eclipse/recommenders/index/0.0.0-SNAPSHOT/maven-metadata-models.xml
+
+.recommenders/repository/http___download_eclipse_org_recommenders_models_luna_/org/eclipse/recommenders/index/0.0.0-SNAPSHOT/index-0.0.0-20140605.014212-1.zip
+
+.recommenders/repository/http___download_eclipse_org_recommenders_models_luna_/org/eclipse/recommenders/index/0.0.0-SNAPSHOT/_remote.repositories
+
+.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/write.lock
+
+.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/segments.gen
+
+.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/segments_1
+
+.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/_0.tis
+
+.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/_0.tii
+
+.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/_0.prx
+
+.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/_0.nrm
+
+.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/_0.frq
+
+.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/_0.fnm
+
+.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/_0.fdx
+
+.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/_0.fdt
