@@ -74,7 +74,7 @@ tmp/**/*
 *.swp
 *~.nib
 local.properties
-.classpath
+
 .settings/
 .loadpath
 /src/main/resources/rebel.xml
@@ -83,30 +83,8 @@ local.properties
  
 # Locally stored "Eclipse launch configurations"
 *.launch
- 
-# CDT-specific
-.cproject
- 
-# PDT-specific
-.buildpath
+
 
 # Locally stored "Eclipse launch configurations"
 *.launch
 
-# CDT-specific
-.cproject
-
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
-
-# Java annotation processor (APT)
-.factorypath
-
-# PDT-specific
-.buildpath
-
-# sbteclipse plugin
-.target
-
-# TeXlipse plugin
-.texlipse
