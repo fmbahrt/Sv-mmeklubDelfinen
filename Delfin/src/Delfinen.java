@@ -1,19 +1,24 @@
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 
 public class Delfinen extends Application {
+	
+	private static Stage window;
 	
 	private static Member mem1 = new Member("Jens", "Sveding");
 	private static Member mem2 = new Member("Daniel-Matthias", "Holtti");
@@ -32,6 +37,8 @@ public class Delfinen extends Application {
 
 	@Override
 	public void start(Stage Stage) throws Exception {
+		
+		window = Stage;
 		
 		/*
 		 * Alt det her skal lave meget bedre,pls.
@@ -62,7 +69,8 @@ public class Delfinen extends Application {
 		//button
 		Button button = new Button("*");
 		button.setOnAction(e -> {
-
+			
+			/*
 			try{
 				//Placeholder variable til selected member i vores table
 				Member memPlaceHolder = mainTable.getSelectionModel().getSelectedItem();
@@ -70,6 +78,9 @@ public class Delfinen extends Application {
 			}catch(Exception j){
 				System.out.println(j.getMessage());
 			}
+			*/
+			
+			login();
 
 		});
 		
@@ -81,10 +92,37 @@ public class Delfinen extends Application {
 		Scene scene = new Scene(hbox, 300, 300);
 		
 		//stage
-		Stage.setResizable(false);
-		Stage.setScene(scene);
-		Stage.show();
+		window.setResizable(false);
+		window.setScene(scene);
+		window.show();
 		
+	}
+	
+	public void login(){
+		//layout 
+		VBox vbox = new VBox(10);
+		vbox.setAlignment(Pos.CENTER);
+		
+		//Textfields
+		TextField tfUsername = new TextField("Username...");
+		tfUsername.setMaxWidth(250);
+		
+		TextField tfPassword = new TextField("Password...");
+		tfPassword.setMaxWidth(250);
+		
+		//Buttons
+		Button btnLogin = new Button("Login");
+		
+		//Add to layout
+		vbox.getChildren().addAll(tfUsername, tfPassword, btnLogin);
+		
+		//Scene
+		Scene scene = new Scene(vbox, 300, 150);
+		
+		//Window
+		window.setScene(scene);
+		window.setTitle("Login");
+		window.show();
 	}
 	
 }
