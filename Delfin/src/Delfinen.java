@@ -122,6 +122,7 @@ public class Delfinen extends Application {
 		//Window
 		window.setScene(scene);
 		window.setTitle("Login");
+		window.setResizable(false);
 		window.show();
 	}
 	
