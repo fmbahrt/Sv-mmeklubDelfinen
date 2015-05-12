@@ -24,6 +24,8 @@ public class Delfinen extends Application {
 	private static Member mem2 = new Member("Daniel-Matthias", "Holtti");
 	private static Member mem3 = new Member("Frederik", "Bahrt");
 	
+	private Member memPlaceHolder; 
+	
 	private TableView<Member> mainTable = new TableView<Member>();
 	
 	//Det giver god mening at have Obeservablelist i main, da vi kun bruger den til "view".
@@ -70,17 +72,15 @@ public class Delfinen extends Application {
 		Button button = new Button("*");
 		button.setOnAction(e -> {
 			
-			/*
+			
 			try{
 				//Placeholder variable til selected member i vores table
-				Member memPlaceHolder = mainTable.getSelectionModel().getSelectedItem();
+				memPlaceHolder = mainTable.getSelectionModel().getSelectedItem();
 				System.out.println(memPlaceHolder.getFirstName());
 			}catch(Exception j){
 				System.out.println(j.getMessage());
 			}
-			*/
 			
-			login();
 
 		});
 		
