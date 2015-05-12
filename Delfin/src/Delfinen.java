@@ -68,9 +68,36 @@ public class Delfinen extends Application {
 		mainTable.setItems(memberList);
 		mainTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
-		//button
-		Button button = new Button("*");
-		button.setOnAction(e -> {
+		
+		//buttons
+				Button button1 = new Button("Opret bruger");
+				button1.setPrefSize(61, 30);
+				
+				Button button2 = new Button("Indmeldelse");
+				button2.setPrefSize(61, 30);
+				
+				Button button3 = new Button("Ændring af medlemstatus");
+				button3.setPrefSize(61, 30);
+				
+				Button button4 = new Button("Slet medlem");
+				button4.setPrefSize(61, 30);
+				
+				Button button5 = new Button("Kontigent betaling");
+				button5.setPrefSize(61, 30);
+				
+				Button button6 = new Button("Restance-medlemmer");
+				button6.setPrefSize(61, 30);
+				
+				Button button7 = new Button("Registrer svømmeresultat");
+				button7.setPrefSize(61, 30);
+				
+				Button button8 = new Button("Top 5");
+				button8.setPrefSize(61, 30);
+				
+		
+		//button Action
+		
+		button1.setOnAction(e -> {
 			
 			
 			try{
@@ -85,8 +112,15 @@ public class Delfinen extends Application {
 		});
 		
 		//layout
+		VBox btnVBox = new VBox();
+		btnVBox.setAlignment(Pos.TOP_CENTER);
+		btnVBox.getChildren().addAll(button1, button2, button3, button4, button5, button6, button7, button8);
+		
 		HBox hbox = new HBox();
-		hbox.getChildren().addAll(mainTable, button);
+		hbox.getChildren().addAll(mainTable, btnVBox);
+		
+		
+		
 		
 		//scene
 		Scene scene = new Scene(hbox, 300, 300);
