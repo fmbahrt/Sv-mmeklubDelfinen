@@ -1,8 +1,13 @@
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 /*
  * Skrevet af: Frederik Bahrt
  */ 
@@ -13,7 +18,7 @@ public class FileHandler {
 	
 	public FileHandler(String fileName, SerializableList serializableList){
 		
-		this.fileName = fileName+".ser";
+		this.fileName = fileName+".bin";
 		
 		this.file = new File(this.fileName);
 		
@@ -37,9 +42,10 @@ public class FileHandler {
 	}
 	
 	public void save(SerializableList serializableList){
-		
+				
 		try 
 		{
+			System.out.println("Vi skriver her");
 			FileOutputStream fous = new FileOutputStream(file);
 			ObjectOutputStream oos = new ObjectOutputStream(fous);
 		    oos.writeObject(serializableList);
@@ -52,12 +58,17 @@ public class FileHandler {
 		}
 	}
 	
+	public File getFile(){
+		return this.file;
+	}
+	
 	public SerializableList read(){
 		
 		SerializableList serList = null;
 		
 		try 
 		{
+			System.out.println("Vi starter her");
 			FileInputStream streamIn = new FileInputStream(file);
 		    ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);    
 		    serList = (SerializableList) objectinputstream.readObject();
