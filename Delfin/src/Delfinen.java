@@ -99,7 +99,7 @@ public class Delfinen extends Application {
 				Button button2 = new Button("Indmeldelse");
 				button2.setPrefSize(61, 30);
 				
-				Button button3 = new Button("�ndring af medlemstatus");
+				Button button3 = new Button("Changing af medlemstatus");
 				button3.setPrefSize(61, 30);
 				
 				Button button4 = new Button("Slet medlem");
@@ -111,7 +111,7 @@ public class Delfinen extends Application {
 				Button button6 = new Button("Restance-medlemmer");
 				button6.setPrefSize(61, 30);
 				
-				Button button7 = new Button("Registrer sv�mmeresultat");
+				Button button7 = new Button("Registrer swimmingresultat");
 				button7.setPrefSize(61, 30);
 				
 				Button button8 = new Button("Top 5");
