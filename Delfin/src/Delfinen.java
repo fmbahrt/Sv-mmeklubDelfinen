@@ -99,7 +99,7 @@ public class Delfinen extends Application {
 				Button button2 = new Button("Indmeldelse");
 				button2.setPrefSize(61, 30);
 				
-				Button button3 = new Button("Ændring af medlemstatus");
+				Button button3 = new Button("ï¿½ndring af medlemstatus");
 				button3.setPrefSize(61, 30);
 				
 				Button button4 = new Button("Slet medlem");
@@ -111,7 +111,7 @@ public class Delfinen extends Application {
 				Button button6 = new Button("Restance-medlemmer");
 				button6.setPrefSize(61, 30);
 				
-				Button button7 = new Button("Registrer svømmeresultat");
+				Button button7 = new Button("Registrer svï¿½mmeresultat");
 				button7.setPrefSize(61, 30);
 				
 				Button button8 = new Button("Top 5");
@@ -207,7 +207,7 @@ public class Delfinen extends Application {
 	}
 	
 	public void createMemberAction(){
-		 serMemList.addMemberToList(new Member("Karl", "Jensen", 56, true, LocalDate.now()));
+		serMemList.addMemberToList(new Member("Karl", "Jensen", 56, true, LocalDate.now()));
 		//serMemList.addMemberToList(new Member(tfFirstName.getText(), tfLastName.getText()));
 		fileMemHandler.save(serMemList);
 		mainView();
