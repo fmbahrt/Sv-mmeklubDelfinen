@@ -13,7 +13,7 @@ public class FileHandler {
 	
 	public FileHandler(String fileName, SerializableList serializableList){
 		
-		this.fileName = fileName+".ser";
+		this.fileName = fileName+".bin";
 		
 		this.file = new File(this.fileName);
 		
@@ -40,6 +40,7 @@ public class FileHandler {
 		
 		try 
 		{
+			System.out.println("Vi skriver her");
 			FileOutputStream fous = new FileOutputStream(file);
 			ObjectOutputStream oos = new ObjectOutputStream(fous);
 		    oos.writeObject(serializableList);
@@ -52,12 +53,17 @@ public class FileHandler {
 		}
 	}
 	
+	public File getFile(){
+		return this.file;
+	}
+	
 	public SerializableList read(){
 		
 		SerializableList serList = null;
 		
 		try 
 		{
+			System.out.println("Vi starter her");
 			FileInputStream streamIn = new FileInputStream(file);
 		    ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);    
 		    serList = (SerializableList) objectinputstream.readObject();
