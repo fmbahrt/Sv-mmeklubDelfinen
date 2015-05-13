@@ -1,3 +1,8 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,18 +23,21 @@ import javafx.stage.Window;
 
 public class Delfinen extends Application {
 	
+	//Ã†ndret 12-05-2015 af Frederik
+	private static SerializableList serMemList = new SerializableList();
+	private static FileHandler fileMemHandler = new FileHandler("Members", serMemList);
+	
+	//Til create member
+	private TextField tfFirstName, tfLastName;
+	
+	//Tabel 
+	private TableView<Member> mainTable = new TableView<Member>();
+	private TableColumn firstNameCol = new TableColumn("First Name");
+	private TableColumn lastNameCol = new TableColumn("Last Name");;
+	
 	private static Stage window;
 	
-	private static Member mem1 = new Member("Jens", "Sveding");
-	private static Member mem2 = new Member("Daniel-Matthias", "Holtti");
-	private static Member mem3 = new Member("Frederik", "Bahrt");
-	
 	private Member memPlaceHolder; 
-	
-	private TableView<Member> mainTable = new TableView<Member>();
-	
-	//Det giver god mening at have Obeservablelist i main, da vi kun bruger den til "view".
-	private static ObservableList<Member> memberList = FXCollections.observableArrayList();
 	
 	public static void main (String[] args) {
 		
@@ -38,64 +46,96 @@ public class Delfinen extends Application {
 	}
 
 	@Override
-	public void start(Stage Stage) throws Exception {
-		
+	public void start(Stage Stage) throws Exception {	
 		window = Stage;
+		mainView();		
+	}
+	
+	public void mainView(){
 		
-		/*
-		 * Alt det her skal lave meget bedre,pls.
-		 * Det er mega grimt
-		 * pls
-		*/
-		
-		memberList.addAll(mem1, mem2, mem3);
-		
-		TableColumn firstNameCol = new TableColumn("First Name");
 		firstNameCol.setCellValueFactory(
                 new PropertyValueFactory<Member, String>("firstName")
                 );
-		
 		firstNameCol.setPrefWidth(100);
-		
-		TableColumn lastNameCol = new TableColumn("Last Name");
+	
 		lastNameCol.setCellValueFactory(
                 new PropertyValueFactory<Member, String>("lastName")
                 );
-		
 		lastNameCol.setPrefWidth(100);
 		
+		//Har sat .clear() ind sÃ¥ der ikke kommmer duplicates.
+		mainTable.getColumns().clear();
 		mainTable.getColumns().addAll(firstNameCol, lastNameCol);
-		mainTable.setItems(memberList);
+		
+		try{
+			mainTable.setItems(fileMemHandler.read().getList());
+		}catch(Exception e){
+			System.out.println("Fejl her: 191919191");
+		}
 		mainTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
-		//button
-		Button button = new Button("*");
-		button.setOnAction(e -> {
+		
+		//buttons
+				Button button1 = new Button("Opret bruger");
+				button1.setPrefSize(61, 30);
+				
+				Button button2 = new Button("Indmeldelse");
+				button2.setPrefSize(61, 30);
+				
+				Button button3 = new Button("Ændring af medlemstatus");
+				button3.setPrefSize(61, 30);
+				
+				Button button4 = new Button("Slet medlem");
+				button4.setPrefSize(61, 30);
+				
+				Button button5 = new Button("Kontigent betaling");
+				button5.setPrefSize(61, 30);
+				
+				Button button6 = new Button("Restance-medlemmer");
+				button6.setPrefSize(61, 30);
+				
+				Button button7 = new Button("Registrer svømmeresultat");
+				button7.setPrefSize(61, 30);
+				
+				Button button8 = new Button("Top 5");
+				button8.setPrefSize(61, 30);
+				
+		
+		//button Action
+		
+		button1.setOnAction(e -> {
 			
-			
+			/*
 			try{
 				//Placeholder variable til selected member i vores table
 				memPlaceHolder = mainTable.getSelectionModel().getSelectedItem();
 				System.out.println(memPlaceHolder.getFirstName());
 			}catch(Exception j){
 				System.out.println(j.getMessage());
-			}
+			}*/
 			
+			createMemberView();
 
 		});
 		
 		//layout
+		VBox btnVBox = new VBox();
+		btnVBox.setAlignment(Pos.TOP_CENTER);
+		btnVBox.getChildren().addAll(button1, button2, button3, button4, button5, button6, button7, button8);
+		
 		HBox hbox = new HBox();
-		hbox.getChildren().addAll(mainTable, button);
+		hbox.getChildren().addAll(mainTable, btnVBox);
+		
+		
+		
 		
 		//scene
 		Scene scene = new Scene(hbox, 300, 300);
 		
 		//stage
-		window.setResizable(false);
+		window.setResizable(true);
 		window.setScene(scene);
 		window.show();
-		
 	}
 	
 	public void login(){
@@ -125,5 +165,37 @@ public class Delfinen extends Application {
 		window.setResizable(false);
 		window.show();
 	}
+	
+	//lavet d. 12-05-2015, Frederik
+	public void createMemberView(){
+		//layout
+		VBox vbox = new VBox(10);
+		
+		//textfield
+		tfFirstName = new TextField("First Name...");
+		tfLastName = new TextField("Last Name...");
+		
+		//buttons
+		Button btnCreate = new Button("Create");
+		btnCreate.setOnAction(e -> createMemberAction());
+		
+		vbox.getChildren().addAll(tfFirstName, tfLastName, btnCreate);
+		//scene
+		Scene scene = new Scene(vbox, 300, 300);
+		
+		//window
+		window.setScene(scene);
+		window.setResizable(true);
+		window.setTitle("Create Member");
+	}
+	
+	public void createMemberAction(){
+		
+		serMemList.addMemberToList(new Member(tfFirstName.getText(), tfLastName.getText()));
+		fileMemHandler.save(serMemList);
+		mainView();
+		
+	}
+	
 	
 }
