@@ -7,14 +7,21 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Member implements Serializable{
-	private SimpleStringProperty firstName;
-	private SimpleStringProperty lastName;
-	private SimpleIntegerProperty age;
-	private SimpleBooleanProperty payingMember;
-	private SimpleObjectProperty<LocalDate> creationDate;
+	//private SimpleStringProperty firstName;
+	//private SimpleStringProperty lastName;
+	//private SimpleIntegerProperty age;
+	//private SimpleBooleanProperty payingMember;
+	//private SimpleObjectProperty<LocalDate> creationDate;
+	//private static int memberCount;
+	
+	private String firstName;
+	private String lastName;
+	private int age;
+	private boolean payingMember;
+	private LocalDate creationDate;
 	private static int memberCount;
 	
-	public Member(String fName, String lName, int age, boolean pMember, LocalDate cDate){
+	/*public Member(String fName, String lName, int age, boolean pMember, LocalDate cDate){
 		this.firstName = new SimpleStringProperty(fName);
 		this.lastName = new SimpleStringProperty(lName);
 		this.age = new SimpleIntegerProperty(age);
@@ -22,48 +29,76 @@ public class Member implements Serializable{
 		this.creationDate = new SimpleObjectProperty<LocalDate>(cDate);
 		memberCount++;
 	}
+	*/
+	public Member(String fName, String lName, int age, boolean pMember, LocalDate cDate){
+		this.firstName = fName;
+		this.lastName = lName;
+		this.age = age;
+		this.payingMember = pMember;
+		this.creationDate = cDate;
+		
+	}
+	public SimpleStringProperty toSimpleStringProp(String namString){
+		SimpleStringProperty placeHolder = new SimpleStringProperty(namString);
+		return placeHolder;
+	}
+	
+	public SimpleIntegerProperty toSimpleIntProp(int age){
+		SimpleIntegerProperty placeHolder = new SimpleIntegerProperty(age);
+		return placeHolder;
+	}
+	
+	public SimpleBooleanProperty toSimpleBoolProp(boolean pMember){
+		SimpleBooleanProperty placeHolder = new SimpleBooleanProperty(pMember);
+		return placeHolder;
+	}
+	public SimpleObjectProperty toSimpleBoolLDate(LocalDate cDate){
+		SimpleObjectProperty<LocalDate> placeHolder = new SimpleObjectProperty<LocalDate>(cDate);
+		return placeHolder;
+	}
+	
 	
 	public String getFirstName(){
-		return firstName.get();
+		return this.firstName;
 	}
 	
 	public void setFirstName(String fName){
-		firstName.set(fName);
+		this.firstName = fName;
 		
 	}
 	
 	public String getLastName(){
-		return lastName.get();
+		return this.lastName;
 		
 	}
 	
 	public void setLastName(String lName){
-		lastName.set(lName);
+		this.lastName = lName;
 		
 	}
 	
 	public int getAge(){
-		return age.get();
+		return this.age;
 		
 	}
 	
 	public void setAge(int newAge){
-		age.set(newAge);
+		this.age = newAge;
 		
 	}
 	
 	public boolean getPayingMember(){
-		return payingMember.get();
+		return this.payingMember;
 		
 	}
 	
 	public void setPayingMember(boolean pMember){
-		payingMember.set(pMember);
+		this.payingMember = pMember;
 		
 	}
 	
 	public LocalDate getCreationDate(){
-		return creationDate.get();
+		return this.creationDate;
 		
 	}
 }
