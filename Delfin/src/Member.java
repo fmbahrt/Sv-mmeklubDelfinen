@@ -20,6 +20,9 @@ public class Member implements Serializable{
 	private boolean payingMember;
 	private LocalDate creationDate;
 	private static int memberCount;
+
+
+
 	
 	/*public Member(String fName, String lName, int age, boolean pMember, LocalDate cDate){
 		this.firstName = new SimpleStringProperty(fName);

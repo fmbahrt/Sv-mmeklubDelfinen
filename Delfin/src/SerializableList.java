@@ -33,6 +33,8 @@ public class SerializableList implements Serializable {
 		return serListTemp;
 	}
 	
-	
+	public ArrayList<Member> getArrayList(){
+		return this.serList;
+	}
 	
 }

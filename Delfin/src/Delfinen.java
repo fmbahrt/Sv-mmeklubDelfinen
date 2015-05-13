@@ -2,6 +2,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalDate;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -26,6 +27,7 @@ public class Delfinen extends Application {
 	//Ændret 12-05-2015 af Frederik
 	private static SerializableList serMemList = new SerializableList();
 	private static FileHandler fileMemHandler = new FileHandler("Members", serMemList);
+	private static ObservableList<Member> obsMemList = FXCollections.observableArrayList();
 	
 	//Til create member
 	private TextField tfFirstName, tfLastName;
@@ -39,12 +41,29 @@ public class Delfinen extends Application {
 	
 	private Member memPlaceHolder; 
 	
+
+	
 	public static void main (String[] args) {
 		
+		instantiatorMemList();
 		launch(args);
 		
 	}
-
+	/*Metoden bruges til at sikre sig at den ikke instantierer serMemList hvis der allerede er en fil.
+	 * Derved instantierer den kun serMemList hvis der ikke er en fil
+	 */
+	public static void instantiatorMemList(){
+		if (fileMemHandler.getFile().exists()){
+			serMemList = fileMemHandler.read();
+		}
+		else{
+			serMemList = new SerializableList();
+		}
+	}
+	
+	
+	
+	
 	@Override
 	public void start(Stage Stage) throws Exception {	
 		window = Stage;
@@ -52,6 +71,8 @@ public class Delfinen extends Application {
 	}
 	
 	public void mainView(){
+		
+		updateTable(fileMemHandler.read());
 		
 		firstNameCol.setCellValueFactory(
                 new PropertyValueFactory<Member, String>("firstName")
@@ -67,11 +88,7 @@ public class Delfinen extends Application {
 		mainTable.getColumns().clear();
 		mainTable.getColumns().addAll(firstNameCol, lastNameCol);
 		
-		try{
-			mainTable.setItems(fileMemHandler.read().getList());
-		}catch(Exception e){
-			System.out.println("Fejl her: 191919191");
-		}
+		mainTable.setItems(obsMemList);
 		mainTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
 		
@@ -190,12 +207,20 @@ public class Delfinen extends Application {
 	}
 	
 	public void createMemberAction(){
-		
-		serMemList.addMemberToList(new Member(tfFirstName.getText(), tfLastName.getText()));
+		 serMemList.addMemberToList(new Member("Karl", "Jensen", 56, true, LocalDate.now()));
+		//serMemList.addMemberToList(new Member(tfFirstName.getText(), tfLastName.getText()));
 		fileMemHandler.save(serMemList);
 		mainView();
 		
 	}
 	
+	public static void updateTable(SerializableList serList){
+		ObservableList<Member> tempMemList = FXCollections.observableArrayList();
+		for (int i = 0; i < serList.getArrayList().size(); i++){
+			tempMemList.add(serList.getArrayList().get(i));
+		}
+		obsMemList = tempMemList;
+		
+	}
 	
 }
