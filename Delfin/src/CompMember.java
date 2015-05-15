@@ -8,6 +8,7 @@ public class CompMember extends Member {
 	private SwimResult[] bestTrainResult = new SwimResult[18];
 	private int noOfTrainResults = 0;
 
+
 	public CompMember(String fName, String lName, int age, boolean pMember, LocalDate cDate){
 		super(fName, lName, age, pMember, cDate);
 	}
@@ -19,8 +20,9 @@ public class CompMember extends Member {
 		
 	}
 	
-	public void addTrainResult(double time, LocalDate date, Disciplin disciplin, SwimLength length){
-		SwimResult placeHolder = new SwimResult(time, date, disciplin, length);
+
+	public void addTrainResult(double time, Disciplin disciplin, SwimLength length){
+		SwimResult placeHolder = new SwimResult(time, LocalDate.now(), disciplin, length);
 		for (int i = 0; i < bestTrainResult.length; i++){
 			if (bestTrainResult[i] == null){
 				bestTrainResult[i] = placeHolder;
@@ -34,6 +36,7 @@ public class CompMember extends Member {
 				}
 				else{
 					System.out.println("Too slow buddy!");
+					break;
 				}
 			}
 		}
@@ -53,14 +56,20 @@ public class CompMember extends Member {
 		
 		System.out.println("Comptetive results");
 		
-		for (int i= 0; i < swimResults.size(); i++){
-			System.out.println("Event: " + swimResults.get(i).getSwimEvent());
-			System.out.println("Date: " + swimResults.get(i).getDate());
-			System.out.println("Disciplin: " + swimResults.get(i).getDisciplin());
-			System.out.println("Length: " + swimResults.get(i).getSwimLength());
-			System.out.println("Place: " + swimResults.get(i).getPlace());
-			System.out.println("Time: " + swimResults.get(i).getTime());
+		if (swimResults != null){
+			for (int i= 0; i < swimResults.size(); i++){
+				System.out.println("Event: " + swimResults.get(i).getSwimEvent());
+				System.out.println("Date: " + swimResults.get(i).getDate());
+				System.out.println("Disciplin: " + swimResults.get(i).getDisciplin());
+				System.out.println("Length: " + swimResults.get(i).getSwimLength());
+				System.out.println("Place: " + swimResults.get(i).getPlace());
+				System.out.println("Time: " + swimResults.get(i).getTime());
 	
+			}
+		}
+		
+		else{
+			System.out.println("Empty");
 		}
 	}
 	
