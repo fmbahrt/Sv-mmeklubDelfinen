@@ -19,7 +19,7 @@ public class Member implements Serializable{
 	private int age;
 	private boolean payingMember;
 	private LocalDate creationDate;
-	private static int memberCount;
+	public static int memberCount;
 
 
 

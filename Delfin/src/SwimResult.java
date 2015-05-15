@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
-public class SwimResult {
+public class SwimResult implements Serializable {
 	private double time;  // In seconds
 	private LocalDate date; // Format: 
 	private int place;  //What place they got in the vent
