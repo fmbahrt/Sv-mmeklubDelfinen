@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class CompMember extends Member {
 	
-	private ArrayList<SwimResult> swimResults;
+	private ArrayList<SwimResult> swimResults = new ArrayList<SwimResult>();
 	private SwimResult[] bestTrainResult = new SwimResult[18];
 	private int noOfTrainResults = 0;
 
@@ -13,65 +13,231 @@ public class CompMember extends Member {
 		super(fName, lName, age, pMember, cDate);
 	}
 	
-	public void addCompResult(double time, LocalDate date, int place, Disciplin disciplin, SwimLength length, String swimEvent){
-		SwimResult swimResult = new SwimResult(time, date, place, disciplin, length, swimEvent);
+	public void addCompResult(double time, int place, Disciplin disciplin, SwimLength length, String swimEvent){
+		SwimResult swimResult = new SwimResult(time, LocalDate.now(), place, disciplin, length, swimEvent);
 		swimResults.add(swimResult);
-		
-		
 	}
-	
-
+	//Adds Training result
+		//Loops through array and only adds if the result is faster or if there is no result
 	public void addTrainResult(double time, Disciplin disciplin, SwimLength length){
-		SwimResult placeHolder = new SwimResult(time, LocalDate.now(), disciplin, length);
-		for (int i = 0; i < bestTrainResult.length; i++){
-			if (bestTrainResult[i] == null){
-				bestTrainResult[i] = placeHolder;
-				noOfTrainResults++;
-				break;
-			}
-			else if (placeHolder.getDisciplin().equals(bestTrainResult[i].getDisciplin()) && placeHolder.getSwimLength().equals(bestTrainResult[i].getSwimLength())){
-				if (placeHolder.getTime() < bestTrainResult[i].getTime()){
-					bestTrainResult[i] = placeHolder;
-					break;
+			SwimResult placeHolder = new SwimResult(time, LocalDate.now(), disciplin, length);
+			for (int i = 0; i < bestTrainResult.length; i++){
+				if (bestTrainResult[i] == null){
+					switch(disciplin){
+						case FREESTYLE: switch(length){
+							case HUNDRED: bestTrainResult[0] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case HUNDREDFIFTY: bestTrainResult[1] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case TWOHUNDRED: bestTrainResult[2] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+						}
+						break;
+						
+						case CRAWL: switch(length){
+							case HUNDRED: bestTrainResult[3] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case HUNDREDFIFTY: bestTrainResult[4] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case TWOHUNDRED: bestTrainResult[5] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+						}
+						break;
+						
+						case BACKSTROKE: switch(length){
+							case HUNDRED: bestTrainResult[6] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case HUNDREDFIFTY: bestTrainResult[7] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case TWOHUNDRED: bestTrainResult[8] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+						}
+						break;
+						
+						case BREASTSTROKE: switch(length){
+							case HUNDRED: bestTrainResult[9] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case HUNDREDFIFTY: bestTrainResult[10] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case TWOHUNDRED: bestTrainResult[11] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+						}
+						break;
+						
+						case BUTTERFLY: switch(length){
+							case HUNDRED: bestTrainResult[12] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case HUNDREDFIFTY: bestTrainResult[13] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case TWOHUNDRED: bestTrainResult[14] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+						}
+						break;
+						
+						case MEDLEY: switch(length){
+							case HUNDRED: bestTrainResult[15] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case HUNDREDFIFTY: bestTrainResult[16] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case TWOHUNDRED: bestTrainResult[17] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+						}
+						break;
+					}
+
 				}
-				else{
-					System.out.println("Too slow buddy!");
-					break;
+				else if (placeHolder.getDisciplin().equals(bestTrainResult[i].getDisciplin()) && placeHolder.getLength().equals(bestTrainResult[i].getLength())){
+					if (placeHolder.getTime() < bestTrainResult[i].getTime()){
+						switch(disciplin){
+						case FREESTYLE: switch(length){
+							case HUNDRED: bestTrainResult[0] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case HUNDREDFIFTY: bestTrainResult[1] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case TWOHUNDRED: bestTrainResult[2] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+						}
+						break;
+						
+						case CRAWL: switch(length){
+							case HUNDRED: bestTrainResult[3] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case HUNDREDFIFTY: bestTrainResult[4] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case TWOHUNDRED: bestTrainResult[5] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+						}
+						break;
+						
+						case BACKSTROKE: switch(length){
+							case HUNDRED: bestTrainResult[6] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case HUNDREDFIFTY: bestTrainResult[7] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case TWOHUNDRED: bestTrainResult[8] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+						}
+						break;
+						
+						case BREASTSTROKE: switch(length){
+							case HUNDRED: bestTrainResult[9] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case HUNDREDFIFTY: bestTrainResult[10] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case TWOHUNDRED: bestTrainResult[11] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+						}
+						break;
+						
+						case BUTTERFLY: switch(length){
+							case HUNDRED: bestTrainResult[12] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case HUNDREDFIFTY: bestTrainResult[13] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case TWOHUNDRED: bestTrainResult[14] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+						}
+						break;
+						
+						case MEDLEY: switch(length){
+							case HUNDRED: bestTrainResult[15] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case HUNDREDFIFTY: bestTrainResult[16] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+							case TWOHUNDRED: bestTrainResult[17] = placeHolder;
+							noOfTrainResults++;
+							break;
+							
+						}
+						break;
+					
+						}
+						
+					}
+					
+					else{
+						System.out.println("Too slow buddy!");
+						break;
+					}
 				}
 			}
 		}
-	}
-		
 	
-	public void showResults(){
-		System.out.println("Best training results");
-		if (noOfTrainResults >=0 && noOfTrainResults <= bestTrainResult.length){
-			for (int i = 0; i < noOfTrainResults; i++){
-				System.out.println(bestTrainResult[i].getTime() + " seconds");
-			}
-		}
-		else{
-			System.out.println("No results");
-		}
-		
-		System.out.println("Comptetive results");
-		
-		if (swimResults != null){
-			for (int i= 0; i < swimResults.size(); i++){
-				System.out.println("Event: " + swimResults.get(i).getSwimEvent());
-				System.out.println("Date: " + swimResults.get(i).getDate());
-				System.out.println("Disciplin: " + swimResults.get(i).getDisciplin());
-				System.out.println("Length: " + swimResults.get(i).getSwimLength());
-				System.out.println("Place: " + swimResults.get(i).getPlace());
-				System.out.println("Time: " + swimResults.get(i).getTime());
-	
-			}
-		}
-		
-		else{
-			System.out.println("Empty");
-		}
+	public SwimResult[] getTrainResults(){
+		return this.bestTrainResult;
 	}
 	
-	
+	public ArrayList<SwimResult> getCompResults(){
+		return this.swimResults;
+	}
 }

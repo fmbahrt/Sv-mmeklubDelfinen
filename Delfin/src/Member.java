@@ -20,7 +20,8 @@ public class Member implements Serializable{
 	private boolean payingMember;
 	private LocalDate creationDate;
 	public static int memberCount;
-
+	private int restance = 0;
+	private boolean pasMember = false;
 
 
 	
@@ -103,5 +104,26 @@ public class Member implements Serializable{
 	public LocalDate getCreationDate(){
 		return this.creationDate;
 		
+	}
+	
+	/*
+	 * Jens Jakob Sveding
+	 */
+	public int getRestance(){
+		return this.restance;
+		
+	}
+	
+	public void setRestance(int newRestance){
+		this.restance += newRestance;
+	}
+	
+	public boolean getPasMember(){
+		return this.pasMember;
+		
+	}
+	
+	public void setPasMember(boolean paMember){
+		this.pasMember = paMember;
 	}
 }

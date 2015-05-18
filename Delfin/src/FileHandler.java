@@ -18,7 +18,7 @@ public class FileHandler {
 	
 	public FileHandler(String fileName, SerializableList serializableList){
 		
-		this.fileName = fileName+".bin";
+		this.fileName = fileName+".delfin";
 		
 		this.file = new File(this.fileName);
 		
@@ -32,6 +32,7 @@ public class FileHandler {
 			    oos.writeObject(serializableList);
 			    fous.close();
 			    oos.close();
+			    System.out.println(this.fileName+" has been succesfullly created!");
 			}
 			catch (Exception e)
 			{
@@ -45,7 +46,7 @@ public class FileHandler {
 				
 		try 
 		{
-			System.out.println("Vi skriver her");
+			System.out.println(this.fileName+" has been succesfully saved!");
 			FileOutputStream fous = new FileOutputStream(file);
 			ObjectOutputStream oos = new ObjectOutputStream(fous);
 		    oos.writeObject(serializableList);
@@ -68,7 +69,7 @@ public class FileHandler {
 		
 		try 
 		{
-			System.out.println("Vi starter her");
+			System.out.println(this.fileName+" has been succesfully loaded!");
 			FileInputStream streamIn = new FileInputStream(file);
 		    ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);    
 		    serList = (SerializableList) objectinputstream.readObject();

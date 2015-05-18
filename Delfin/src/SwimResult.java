@@ -10,6 +10,10 @@ public class SwimResult implements Serializable {
 	private SwimLength length;
 	private String swimEvent; //Event name
 	
+	public SwimResult(){
+		
+	}
+	
 	public SwimResult(double time, LocalDate date, Disciplin disciplin, SwimLength length){
 		this.time = time;
 		this.date = date;
@@ -43,12 +47,28 @@ public class SwimResult implements Serializable {
 		return disciplin;
 	}
 	
-	public SwimLength getSwimLength(){
+	public SwimLength getLength(){
 		return length;
 	}
 	
 	public String getSwimEvent(){
 		return swimEvent;
+	}
+	
+	public void setTime(double time){
+		this.time = time;
+	}
+	    
+	public void setDate(LocalDate date){
+			this.date = date;
+	}
+	    
+	public void setDis(Disciplin disciplin){
+			this.disciplin = disciplin;	
+	}
+	    
+	public void setLen(SwimLength length){
+			this.length = length;	
 	}
 	
 	
