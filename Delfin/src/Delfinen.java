@@ -96,6 +96,7 @@ public class Delfinen extends Application {
 	private TableColumn restanceCol = new TableColumn("Restance");
 	
 	private static Stage window, crtMemDialog, newUserWindow;
+	private static Scene mainScene, topFiveScene;
 	
 	private Member memPlaceHolder; 
 
@@ -153,13 +154,10 @@ public class Delfinen extends Application {
 		btnOpret.setPrefSize(61, 30);
 		btnOpret.setOnAction(e -> createMemberView());
 				
-		Button btnEnroll = new Button("Indmeldelse");
+		Button btnEnroll = new Button("Indmeld");
 		btnEnroll.setPrefSize(140, 200);
 		btnEnroll.setOnAction(e -> createMemberView());
-				
-		Button btnMemStatus = new Button("Changing af medlemstatus");
-		btnMemStatus.setPrefSize(140, 200);
-				
+	
 		Button btnRemove = new Button("Slet medlem");
 		btnRemove.setPrefSize(140, 200);
 		btnRemove.setOnAction(e -> {
@@ -170,13 +168,17 @@ public class Delfinen extends Application {
 				
 		Button btnPay = new Button("Kontigent betaling");
 		btnPay.setPrefSize(140, 200);
-		btnPay.setOnAction(e -> kontigentBetalingAction());
+		btnPay.setOnAction(e -> {
+			if(mainTable.getSelectionModel().getSelectedItem() != null){
+				kontigentBetalingAction();
+			}
+		});
 		
-		Button btnRestance = new Button("Restance-medlemmer");
+		Button btnRestance = new Button("Restance");
 		btnRestance.setPrefSize(140, 200);
 		btnRestance.setOnAction(e -> showRestanceMembers());
 				
-		Button btnSwimRes = new Button("Registrer swimmingresultat");
+		Button btnSwimRes = new Button("Svømmeresultat");
 		btnSwimRes.setPrefSize(140, 200);
 		btnSwimRes.setOnAction(e -> {
 			if(mainTable.getSelectionModel().getSelectedItem() instanceof CompMember){
@@ -202,20 +204,22 @@ public class Delfinen extends Application {
 
 		Label lblTableTotal = new Label(" Total: "+obsMemList.size());
 		
-		//
+		/*
+		 * Forskellige brugere har forskellig access til programmet funktioner.
+		 * Denne if/else sørger for, at knapperne kun er tilgængelige for dem
+		 * der har access.
+		 */
 		if(loggedUser.getAccess().equals(UserType.ADMIN)){
 			btnRegUser.setVisible(true);
 		}else if(loggedUser.getAccess().equals(UserType.TREASURER)){
 			btnRegUser.setVisible(false);
 			btnEnroll.setDisable(true);
-			btnMemStatus.setDisable(true);
 			btnRemove.setDisable(true);
 			btnSwimRes.setDisable(true);
 			btnTop.setDisable(true);
 		}else if(loggedUser.getAccess().equals(UserType.COACH)){
 			btnRegUser.setVisible(false);
 			btnEnroll.setDisable(true);
-			btnMemStatus.setDisable(true);
 			btnRemove.setDisable(true);
 			btnPay.setDisable(true);
 			btnRestance.setDisable(true);
@@ -232,7 +236,7 @@ public class Delfinen extends Application {
 		hboxTop.getChildren().addAll(lblWelcome, btnRegUser,btnLogout);
 		
 		VBox vbox = new VBox();
-		vbox.getChildren().addAll(btnEnroll, btnMemStatus, btnRemove, btnPay, btnRestance, btnSwimRes, btnTop);
+		vbox.getChildren().addAll(btnEnroll, btnRemove, btnPay, btnRestance, btnSwimRes, btnTop);
 		
 		VBox vboxCenter = new VBox();
 		vboxCenter.getChildren().addAll(mainTable, lblTableTotal);
@@ -242,17 +246,24 @@ public class Delfinen extends Application {
 		borderPane.setRight(vbox);
 		
 		//scene
-		Scene scene = new Scene(borderPane, 1000, 600);
+		mainScene = new Scene(borderPane, 1000, 600);
 		
 		//stage
 		window.setResizable(true);
-		window.setScene(scene);
+		window.setScene(mainScene);
 		window.setTitle("Logged in as: "+loggedUser.getUsername()+", Access Type: "+loggedUser.getAccess());
 		window.setResizable(false);
 		window.show();
 	}
-	//14-05-2015, af Frederik
+	
 	public void login(){
+		
+		/* 
+		 * Metode skrevet af: Frederik Bahrt
+		 * 
+		 * Metoden laver GUI til login.
+		 */
+		
 		//layout 
 		VBox vbox = new VBox(10);
 		vbox.setAlignment(Pos.CENTER);
@@ -290,6 +301,13 @@ public class Delfinen extends Application {
 	
 	public void loginAction(){
 		
+		/* 
+		 * Metode skrevet af: Frederik Bahrt
+		 * 
+		 * Metoden bruger loginValidation og tager indtastet data.
+		 * Hvis exception kastes, bliver brugeren opmærksom på fejl.
+		 */
+		
 		try{
 			loginValidation(tfUsername.getText(), tfPassword.getText());
 			mainView();
@@ -303,8 +321,15 @@ public class Delfinen extends Application {
 		
 	}
 	
-	//Validerer login oplysninger, dette kan laves i egen klasse!, af Frederik
 	public void loginValidation(String username, String password) throws InvalidLoginException{
+		
+		/* 
+		 * Metode skrevet af: Frederik Bahrt
+		 * 
+		 * Metoden validerer, at indtastede data stemmer overens med allerede eksisterende bruger,
+		 * hvis ikke kastes en exception.
+		 */
+		
 		boolean grantAccess = false;
 		for(int i = 0; i < serList.getUserList().size(); i++){
 			if(serList.getUserList().get(i).getUsername().equals(username) && serList.getUserList().get(i).getPassword().equals(password)){
@@ -321,6 +346,13 @@ public class Delfinen extends Application {
 	}
 	
 	public void newUserView(){
+		
+		/* 
+		 * Metode skrevet af: Frederik Bahrt
+		 * 
+		 * Metoden laver GUI til oprettelse af ny bruger
+		 */
+		
 		newUserWindow = new Stage();
 		
 		//layout
@@ -391,8 +423,14 @@ public class Delfinen extends Application {
 		newUserWindow.show();
 	}
 	
-	//lavet d. 12-05-2015, Frederik
 	public void createMemberView(){
+		
+		/* 
+		 * Metode skrevet af: Frederik Bahrt
+		 * 
+		 * Metoden laver GUI til oprettelse af nyt medlem.
+		 */
+		
 		crtMemDialog = new Stage();
 		
 		//layout
@@ -454,8 +492,16 @@ public class Delfinen extends Application {
 		
 	}
 	
-	//Ændret 13-05-2015, af Frederik
 	public void createMemberAction(){
+		
+		/* 
+		 * Metode skrevet af: Frederik Bahrt
+		 * 
+		 * Metoden skal tilføje og gemme et nyt medlem til listen med data fra RadioButtons og
+		 * TextFields.
+		 * 
+		 * Der try/catches, hvis invalide data fra brugeren indtastes.
+		 */
 		
 		try{
 			
@@ -494,6 +540,11 @@ public class Delfinen extends Application {
 	
 	public void removeMemberAction(){
 	
+		/* 
+		 * Metode skrevet af: Frederik Bahrt
+		 * 
+		 * Metoden fjerner den markerede bruger fra listen.
+		 */
 		
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirm Dialog");
@@ -506,7 +557,11 @@ public class Delfinen extends Application {
 
 		alert.getButtonTypes().setAll(btnTypeYes, btnTypeNo, btnTypeCancel);
 
+		//Her ser systemet hvilken knap man trykker, og handler ud fra det.
 		Optional<ButtonType> result = alert.showAndWait();
+		/*
+		 * Hvis 'ja', finder loopet matchende medlem og sletter denne fra listen.
+		 */
 		if (result.get() == btnTypeYes){
 			for(int i = 0; i < obsMemList.size(); i++){
 				if(obsMemList.get(i) == mainTable.getSelectionModel().getSelectedItem()){
@@ -524,10 +579,18 @@ public class Delfinen extends Application {
 	}
 
 	public boolean checkTextField(String textField){
-		//Bruger regex(regular expression) til at finde ud af om navnet indeholder invalide chars
-		//Hvis textField indeholder invalide navnetegn returner den false.
+		/*
+		 * 
+		 * Metode skrevet af: Frederik Bahrt
+		 * 
+		 * Metodens funktion er, at tjekke om det der bliver skrevet i et tekstfield er et gyldigt
+		 * navn.
+		 * 
+		 * Bruger regex(regular expression) til at finde ud af om navnet indeholder invalide chars
+		 * Hvis textField indeholder invalide navnetegn returner den false.
+		 */
 		
-		Pattern pRegex = Pattern.compile("[^A-Å^a-å-]");
+		Pattern pRegex = Pattern.compile("[^A-Z^a-z-^Æ^æ^Ø^ø^Å^å]"); //Tilføjede selv 'æøå', da den kun kender a-z!
 		Matcher mRegex = pRegex.matcher(textField);
 		
 		if(mRegex.find()){
@@ -583,7 +646,6 @@ public class Delfinen extends Application {
 	public void showRestanceMembers(){
 		
 		ObservableList<Member> restanceList = FXCollections.observableArrayList();
-		
 		
 		for(int i = 0; i < obsMemList.size(); i++){	
 			// Liste der viser members der er i restance
@@ -1350,10 +1412,10 @@ public class Delfinen extends Application {
 		bPane1.setRight(btnBack);
 
 		//Scene
-		Scene scene = new Scene(bPane1, 1000, 600);
+		topFiveScene = new Scene(bPane1, 1000, 600);
 				
 		//Window
-		window.setScene(scene);
+		window.setScene(topFiveScene);
 		window.setResizable(true);
 		window.setTitle("Top 5");
 
@@ -1362,6 +1424,8 @@ public class Delfinen extends Application {
 	}
 	
 	public void showTopFive(Disciplin disciplin, SwimLength swimLength){
+		top5List.clear();
+		
 		ArrayList<CompMember> tempCompMemList = new ArrayList<CompMember>();
 		CompMember comMem1 = null;
 		CompMember comMem2 = null;
@@ -1379,32 +1443,42 @@ public class Delfinen extends Application {
 						if (comMem1 == null){
 							comMem1 = ((CompMember) obsMemList.get(i));
 						}
-						else if (comMem2.getTrainResults()[j] == null){
+						else if (comMem2 == null){
 							comMem2 = ((CompMember) obsMemList.get(i));
 						}
-						else if (comMem3.getTrainResults()[j] == null){
+						else if (comMem3== null){
 							comMem3 = ((CompMember) obsMemList.get(i));
 						}
-						else if (comMem4.getTrainResults()[j] == null){
+						else if (comMem4 == null){
 							comMem4 = ((CompMember) obsMemList.get(i));
 						}
-						else if (comMem5.getTrainResults()[j] == null){
+						else if (comMem5 == null){
 							comMem5 = ((CompMember) obsMemList.get(i));
 						}
 						
-						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() > comMem1.getTrainResults()[j].getTime()){
+						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem1.getTrainResults()[j].getTime()){
+							comMem5 = comMem4;
+							comMem4 = comMem3;
+							comMem3 = comMem2;
+							comMem2 = comMem1;
 							comMem1 = ((CompMember) obsMemList.get(i));
 						}
-						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() > comMem2.getTrainResults()[j].getTime()){
+						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem2.getTrainResults()[j].getTime()){
+							comMem5 = comMem4;
+							comMem4 = comMem3;
+							comMem3 = comMem2;
 							comMem2 = ((CompMember) obsMemList.get(i));
 						}
-						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() > comMem3.getTrainResults()[j].getTime()){
+						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem3.getTrainResults()[j].getTime()){
+							comMem5 = comMem4;
+							comMem4 = comMem3;
 							comMem3 = ((CompMember) obsMemList.get(i));
 						}
-						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() > comMem4.getTrainResults()[j].getTime()){
+						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem4.getTrainResults()[j].getTime()){
+							comMem5 = comMem4;
 							comMem4 = ((CompMember) obsMemList.get(i));
 						}
-						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() > comMem5.getTrainResults()[j].getTime()){
+						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem5.getTrainResults()[j].getTime()){
 							comMem5 = ((CompMember) obsMemList.get(i));
 						}
 					} 

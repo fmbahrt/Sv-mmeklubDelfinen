@@ -10,6 +10,9 @@ import javafx.collections.ObservableList;
 
 /*
  * Skrevet af: Frederik Bahrt
+ * 
+ * Denne klasse håndterer vores SerializableList, således, at den kan gemmes
+ * og læses i/fra fil.
  */ 
 public class FileHandler {
 	
@@ -22,6 +25,10 @@ public class FileHandler {
 		
 		this.file = new File(this.fileName);
 		
+		/*
+		 * Da det er et krav at filen eksister i vores system, bliver dette
+		 * klaret i vores constructer til klassen.
+		 */
 		if(file.exists()){
 			//do nothing
 		}else{
@@ -46,10 +53,10 @@ public class FileHandler {
 				
 		try 
 		{
-			System.out.println(this.fileName+" has been succesfully saved!");
 			FileOutputStream fous = new FileOutputStream(file);
 			ObjectOutputStream oos = new ObjectOutputStream(fous);
 		    oos.writeObject(serializableList);
+		    System.out.println(this.fileName+" has been succesfully saved!");
 		    fous.close();
 		    oos.close();
 		}
@@ -69,10 +76,10 @@ public class FileHandler {
 		
 		try 
 		{
-			System.out.println(this.fileName+" has been succesfully loaded!");
 			FileInputStream streamIn = new FileInputStream(file);
 		    ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);    
 		    serList = (SerializableList) objectinputstream.readObject();
+		    System.out.println(this.fileName+" has been succesfully loaded!");
 		    streamIn.close();
 		    objectinputstream.close();
 
