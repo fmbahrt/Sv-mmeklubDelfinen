@@ -620,23 +620,29 @@ public class Delfinen extends Application {
 	
 	public void kontigentBetalingAction(){
 		
+		/* 
+		 * Metode skrevet af: Jens Jakob Sveding
+		 * 
+		 * Metoden skal bruges til at bekræft kontigent betaling, eller opkræve kontigenter for et eller alle medlemmer.
+		 */
 
 		//Placeholder variable til selected member i vores table
 		memPlaceHolder = mainTable.getSelectionModel().getSelectedItem();
 		
 		//createKontigentBetaling();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Contingent comfirmation");
-		// "Firstname's contigent to pay is: 500/1000/1600;"
-		alert.setHeaderText(""+memPlaceHolder.getFirstName()+"'s contingent to pay is: "+Contingent.whichKontigent(memPlaceHolder)+",-");
-		// "Confirm that Firstname Lastname has paid his contigent!"
-		alert.setContentText("Comfirm that "+ memPlaceHolder.getFirstName()+ " " +memPlaceHolder.getLastName()+" has paid his contigent!");
+		alert.setTitle("Kontigent betaling");
+		// "Firstname skal betale: 500/1000/1600; i kontigent"
+		alert.setHeaderText(""+memPlaceHolder.getFirstName()+" skal betale: "+Contingent.whichKontigent(memPlaceHolder)+",- i kontigent");
+		// "Bekræft at Firstname Lastname har betalt dette belQb"
+		alert.setContentText("Bekraeft at "+ memPlaceHolder.getFirstName()+ " " +memPlaceHolder.getLastName()+" har betalt dette belQb");
 	
 		ButtonType btnTypeYes = new ButtonType("Confirm");
 		ButtonType btnTypeNo = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+		ButtonType btnTypeKontigent = new ButtonType("Opkraev kontigent");
 		
 	
-		alert.getButtonTypes().setAll(btnTypeYes, btnTypeNo);
+		alert.getButtonTypes().setAll(btnTypeYes, btnTypeNo,btnTypeKontigent);
 	
 		Optional<ButtonType> result = alert.showAndWait();
 		
@@ -648,25 +654,37 @@ public class Delfinen extends Application {
 			fileHandler.save(serList);
 		}else if (result.get() == btnTypeNo) {
 		    //
-		} 
+		} else if(result.get() == btnTypeKontigent){
+			//ShowOpkraevKontigent er en ny alert, hvor der kan opkræves kontigent, metoden ses nederst
+			ShowOpkraevKontigent();
+		}
 	
 }
 
 	public void showRestanceMembers(){
+		/* 
+		 * Metode skrevet af: Jens Jakob Sveding
+		 * 
+		 * Metoden skal bruges vise alle medlemmer i restance
+		 */
 		
 		ObservableList<Member> restanceList = FXCollections.observableArrayList();
 		
+		// Looper igennem listen med medlemmer og finder de medlemmer der er i restance
+		// og putter dem i restanceList
 		for(int i = 0; i < obsMemList.size(); i++){	
-			// Liste der viser members der er i restance
+			
 			if(obsMemList.get(i).getRestance() != 0){
 				restanceList.add(obsMemList.get(i));
 			}
 		}
-		
+		//stage
 		Stage restanceStage = new Stage();
 		
 		//gridpane
 		GridPane grid = new GridPane();
+		
+		//TableView med columns |Firstname|Lastname|restance|
 		TableView<Member> tv = new TableView<Member>();
 		TableColumn firstNameCol = new TableColumn("First Name");
 		TableColumn lastNameCol = new TableColumn("Last Name");;
@@ -687,7 +705,7 @@ public class Delfinen extends Application {
                 );
 		restanceCol.setPrefWidth(100);
 		
-		//Har sat .clear() ind sÃƒÂ¥ der ikke kommmer duplicates.
+		//Har sat .clear() ind saa der ikke kommmer duplicates.
 		tv.getColumns().clear();
 		tv.getColumns().addAll(firstNameCol, lastNameCol, restanceCol);
 		tv.setItems(restanceList);
@@ -1519,5 +1537,40 @@ public class Delfinen extends Application {
 	
 	}
 
-
+	public void ShowOpkraevKontigent(){
+		/* 
+		 * Metode skrevet af: Jens Jakob Sveding
+		 * 
+		 * Metoden bruges i Kontigent betaling, og bruges til at opkræve kontigenter.
+		 */
+		
+		Alert kAlert = new Alert(AlertType.CONFIRMATION);
+		kAlert.setTitle("Opkraev kontigent:");
+		kAlert.setHeaderText("Tryk: Dette Medlem, for at opkræve kontigent for dette medlem \nTryk: Alle Medlemmer, for at opkraeve kontigent for alle medlemmer i klubben");
+		kAlert.setContentText("Medlemmerne bliver sat i %restance ved kontigent opkraevning");
+		
+		ButtonType btnTypeDM = new ButtonType("Dette medlem");
+		ButtonType btnTypeAM = new ButtonType("Alle Medlemmer");
+		ButtonType btnTypeA = new ButtonType("Annuller", ButtonData.CANCEL_CLOSE);
+		
+		kAlert.getButtonTypes().setAll(btnTypeDM, btnTypeAM, btnTypeA);
+		Optional<ButtonType> resultKontigent = kAlert.showAndWait();
+		
+		if(resultKontigent.get() == btnTypeDM){
+			//sætter dette medlems restance til %kontigent og saver
+			memPlaceHolder.setRestance(Contingent.whichKontigent(memPlaceHolder)*-1);
+			serList.setList(obsMemList);
+			fileHandler.save(serList);
+		}else if(resultKontigent.get() == btnTypeAM){
+			//sætter alle medlemmers restance til %kontigent og saver
+			for(int i = 0; i < obsMemList.size(); i++){
+				obsMemList.get(i).setRestance(Contingent.whichKontigent(obsMemList.get(i))*-1);
+				serList.setList(obsMemList);
+				fileHandler.save(serList);
+			}
+			
+		}else if(resultKontigent.get() == btnTypeA){
+			//
+		}
+	}
 }

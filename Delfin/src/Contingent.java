@@ -1,5 +1,10 @@
 
 public class Contingent {
+	
+	/*
+	 * Lavet af: Jens Jakob Sveding
+	 */
+	
 	public static int kontigent;
 	
 	public static int whichKontigent(Member member){
