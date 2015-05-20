@@ -1,12 +1,20 @@
 import java.io.Serializable;
 import java.time.LocalDate;
-
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Member implements Serializable{
+	/*
+	 * 
+	 * Class made by: Daniel-Matthias Holtti
+	 * 
+	 * Class is a generic member class. 
+	 * It is used for inheritance.
+	 * 
+	 */
+	
 	//private SimpleStringProperty firstName;
 	//private SimpleStringProperty lastName;
 	//private SimpleIntegerProperty age;

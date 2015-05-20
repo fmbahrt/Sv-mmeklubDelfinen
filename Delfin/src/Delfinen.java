@@ -720,6 +720,15 @@ public class Delfinen extends Application {
 	}
 
 	public void resultsView(){
+		/*
+		 * 
+		 * Method made by: Daniel-Matthias Holtti
+		 * 
+		 * Method creates new window with 5 buttons
+		 * Each button casts another method on click
+		 * 
+		 */
+		
 		//Labels
 		Label resultsBorder = new Label("Lav og se resultater                                                                                                                         ");
 		resultsBorder.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
@@ -767,6 +776,7 @@ public class Delfinen extends Application {
 			mainView();
 		});
 		
+		//More layout
 		hbox1.setAlignment(Pos.BASELINE_LEFT);
 		hbox1.setPadding(new Insets(10, 10, 10, 10));
 		hbox1.setSpacing(10);
@@ -782,7 +792,7 @@ public class Delfinen extends Application {
 				
 				
 				
-		//scene
+		//Scene
 		Scene scene = new Scene(bPane1, 1000, 230);
 			
 		
@@ -794,6 +804,16 @@ public class Delfinen extends Application {
 	}
 
 	public void showTrResultsView(){
+		/*
+		 * 
+		 * Method made by: Daniel-Matthias Holtti
+		 * 
+		 * Method creates new window. 
+		 * Window has a table and a button to take the user back to previous window.
+		 * The table is filled with results from training of a member
+		 * Method is used when user wants to see trainingresults of a member
+		 * 
+		 */
 		
 		//Labels
 		Label resultsBorder = new Label("Se Training Results                                                                                                                        ");
@@ -807,11 +827,10 @@ public class Delfinen extends Application {
 		hbox1.setPadding(new Insets(10, 10, 10, 10));
 		hbox1.setSpacing(10);
 		hbox1.setStyle("-fx-background-color: #99CCFF;");
-		hbox1.getChildren().addAll(resultsBorder);
-				
-				
+		hbox1.getChildren().addAll(resultsBorder);		
 		VBox vbox1 = new VBox();
 		
+		//Table columns set
 		timeCol.setCellValueFactory(
                 new PropertyValueFactory<SwimResult, Double>("time")
                 );
@@ -838,7 +857,7 @@ public class Delfinen extends Application {
 		trResultTable.setItems(trainResults);
 		trResultTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
-		//Goes through each result in the array of the selected member and adds those results to an arraylist
+		//Goes through each result in the array of the selected member and adds those results to an observablelist
 		if(mainTable.getSelectionModel().getSelectedItem() instanceof CompMember){
 			SwimResult[] placeHolder = ((CompMember) mainTable.getSelectionModel().getSelectedItem()).getTrainResults();
 			for (int i = 0; i < ((CompMember) mainTable.getSelectionModel().getSelectedItem()).getTrainResults().length; i++){	
@@ -874,8 +893,18 @@ public class Delfinen extends Application {
 		window.setTitle("Training Results");
 	}
 	
-	//Matthias 15-05-2015
+
 	public void showCompResultsView(){
+		/*
+		 * 
+		 * Method made by: Daniel-Matthias Holtti
+		 * 
+		 * Method creates new window. 
+		 * Window has a table and a button to take the user back to previous window.
+		 * The table is filled with results from competitive events of a member
+		 * Method is used when user wants to see all resuls from competitive events
+		 * 
+		 */
 		
 		//Labels
 		Label resultsBorder = new Label("Se Competetive Results                                                                                                                        ");
@@ -889,12 +918,10 @@ public class Delfinen extends Application {
 		hbox1.setPadding(new Insets(10, 10, 10, 10));
 		hbox1.setSpacing(10);
 		hbox1.setStyle("-fx-background-color: #99CCFF;");
-		hbox1.getChildren().addAll(resultsBorder);
-				
-				
+		hbox1.getChildren().addAll(resultsBorder);		
 		VBox vbox1 = new VBox();
 		
-
+		//Tablecolumns set
 		timeCol.setCellValueFactory(
                 new PropertyValueFactory<SwimResult, Double>("time")
                 );
@@ -932,7 +959,7 @@ public class Delfinen extends Application {
 		trResultTable.setItems(trainResults);
 		trResultTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
-		//If the chosen member is a CompMember it adds it results to an arraylist
+		//If the chosen member is a CompMember it adds its results to an observablelist
 		if(mainTable.getSelectionModel().getSelectedItem() instanceof CompMember){
 			trainResults.setAll(((CompMember) mainTable.getSelectionModel().getSelectedItem()).getCompResults());
 		}
@@ -961,8 +988,19 @@ public class Delfinen extends Application {
 
 	}
 	
-	//Matthas 14-05-2015
+	
 	public void addTrResultsView(){
+		/*
+		 * 
+		 * Method made by: Daniel-Matthias Holtti
+		 * 
+		 * Method creates new window. 
+		 * Window has two buttons, a textfield and two dropdown boxes.
+		 * Method is used when user wants to add a trainingresult to a member
+		 * 
+		 */
+
+		
 		//Labels
 		Label resultsBorder = new Label("Lav training resultater                                                                                                                         ");
 		resultsBorder.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
@@ -979,7 +1017,7 @@ public class Delfinen extends Application {
 		tfTime = new TextField("Time");
 		tfTime.setPrefWidth(200);
 		
-		//ComboBox
+		//ComboBoxes aka dropdown boxes
 		ComboBox<Disciplin> disBox = new ComboBox<>();
 		disBox.getItems().setAll(Disciplin.values());
 		disBox.setPrefWidth(200);
@@ -992,7 +1030,7 @@ public class Delfinen extends Application {
 		lenBox.setValue(SwimLength.HUNDRED);
 		
 		//Buttons
-		//Adds uses the addTrainResult method to the selected member
+		//AddResult uses the addTrainResult method to the selected member
 		Button btnAddResult = new Button("Add Result");
 		btnAddResult.setOnAction(e ->{  
 			try{
@@ -1003,6 +1041,7 @@ public class Delfinen extends Application {
 				}	
 			}
 			
+			//Exception for when the user types in anything but a double in the textfield
 			catch(NumberFormatException x){
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("NumberFormatException");
@@ -1047,7 +1086,17 @@ public class Delfinen extends Application {
 		window.setTitle("Add Training Result");
 	}
 
-	public void addCompResultsView(){
+	public void addCompResultsView(){	
+		/*
+		 * 
+		 * Method made by: Daniel-Matthias Holtti
+		 * 
+		 * Method creates new window. 
+		 * Window has two buttons, three textfields and two dropdown boxes.
+		 * Method is used when user wants to add a trainingresult to a member
+		 * 
+		 */
+		
 		//Labels
 		Label resultsBorder = new Label("Lav competetive resultater                                                                                                                         ");
 		resultsBorder.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
@@ -1081,7 +1130,8 @@ public class Delfinen extends Application {
 		lenBox.setValue(SwimLength.HUNDRED);
 		
 		//Buttons
-		//Adds a competitive result to the selected member
+		//Adds a competitive result to the selected member using the addCompResult method from CompMember
+		//It only adds when the member is a CompMember
 
 		Button btnAddResult = new Button("Add Result");
 		btnAddResult.setOnAction(e ->{  
@@ -1152,6 +1202,17 @@ public class Delfinen extends Application {
 	}
 
 	public void showTopFiveMainView(){
+		/*
+		 * 
+		 * Method made by: Daniel-Matthias Holtti
+		 * 
+		 * Method creates new window. 
+		 * Window has seven buttons for each discipline and a back button
+		 * When a button is clicked a flag is incremented for the discipline the button represents
+		 * When a discipline button is clicked another method is called
+		 * 
+		 */
+		
 		//Labels
 		Label resultsBorder = new Label("Top 5 discipliner                                                                                                                         ");
 		resultsBorder.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
@@ -1254,6 +1315,17 @@ public class Delfinen extends Application {
 	}
 	
 	public void swimLengthView(){
+		/*
+		 * 
+		 * Method made by: Daniel-Matthias Holtti
+		 * 
+		 * Method creates new window. 
+		 * Window has 4 buttons for each swimlenght and one back button
+		 * When a button is clicked a flag is incremented for the distance the button represents
+		 * When a swimlength button is clicked another method is called
+		 * 
+		 */
+		
 		//Labels
 		Label resultsBorder = new Label("Top 5 lengths                                                                                                                         ");
 		resultsBorder.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
@@ -1332,8 +1404,18 @@ public class Delfinen extends Application {
 	}
 	
 	public void showTopFiveView(){
+		/*
+		 * 
+		 * Method made by: Daniel-Matthias Holtti
+		 * 
+		 * Method creates new window. 
+		 * Window has a button and a table of top 5
+		 * The top 5 data is chosen by the discipline and swimlength that the user chose
+		 * 
+		 */
 		//showTopFive(Disciplin.FREESTYLE, SwimLength.HUNDRED);
-		
+
+		//Checks for flags and calls the showTopFive method for the exact case
 		if(crawlFlag > 0 && hundFlag > 0){
 			showTopFive(Disciplin.CRAWL, SwimLength.HUNDRED);
 		}
@@ -1401,12 +1483,10 @@ public class Delfinen extends Application {
 		hbox1.setPadding(new Insets(10, 10, 10, 10));
 		hbox1.setSpacing(10);
 		hbox1.setStyle("-fx-background-color: #99CCFF;");
-		hbox1.getChildren().addAll(resultsBorder);
-						
-						
+		hbox1.getChildren().addAll(resultsBorder);		
 		VBox vbox1 = new VBox();
 			
-
+		//Sets tablecolumns
 		firstNameCol.setCellValueFactory(
 		        new PropertyValueFactory<CompMember, String>("firstName")
 		 );
@@ -1451,8 +1531,18 @@ public class Delfinen extends Application {
 	}
 	
 	public void showTopFive(Disciplin disciplin, SwimLength swimLength){
+		/*
+		 * 
+		 * Method made by: Daniel-Matthias Holtti
+		 * 
+		 * Method checks all members and searches for training results in the given discipline and swimlength
+		 * Method is used to determine an exact top five for any given discipline and swimlength
+		 * 
+		 */
+		
 		top5List.clear();
 		
+		//Temporary variables
 		ArrayList<CompMember> tempCompMemList = new ArrayList<CompMember>();
 		CompMember comMem1 = null;
 		CompMember comMem2 = null;
@@ -1460,81 +1550,91 @@ public class Delfinen extends Application {
 		CompMember comMem4 = null;
 		CompMember comMem5 = null;
 		
-	try{
-		for (int i = 0; i < obsMemList.size(); i++){
-			if (obsMemList.get(i) instanceof CompMember){
-				for (int j = 0; j < ((CompMember) obsMemList.get(i)).getTrainResults().length; j++){
-					if(((CompMember) obsMemList.get(i)).getTrainResults()[j] != null){
-					if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getDisciplin().equals(disciplin) && ((CompMember) obsMemList.get(i)).getTrainResults()[j].getLength().equals(swimLength)){
-						System.out.println("Vi er inde");
-						if (comMem1 == null){
-							comMem1 = ((CompMember) obsMemList.get(i));
+		
+		/*Loops through each member in the memberlist
+		 * The array of results in each CompMember will be searched to see if it has a result at the given discipline and swimlength
+		 * If it does it will check if its time is fast enough
+		 * If it is, the result will be stored in a variable in the right place and the other results will apropriately be placed according to the speed
+		 * At the end it takes the five best results and adds them to the temporary arraylist
+		 * The observablelist for top5 is then set to the arraylist
+		 * 
+		 */
+		try{
+			for (int i = 0; i < obsMemList.size(); i++){
+				if (obsMemList.get(i) instanceof CompMember){
+					for (int j = 0; j < ((CompMember) obsMemList.get(i)).getTrainResults().length; j++){
+						if(((CompMember) obsMemList.get(i)).getTrainResults()[j] != null){
+							if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getDisciplin().equals(disciplin) && ((CompMember) obsMemList.get(i)).getTrainResults()[j].getLength().equals(swimLength)){
+								System.out.println("Vi er inde");
+								if (comMem1 == null){
+									comMem1 = ((CompMember) obsMemList.get(i));
+								}
+								else if (comMem2 == null){
+									comMem2 = ((CompMember) obsMemList.get(i));
+								}
+								else if (comMem3== null){
+									comMem3 = ((CompMember) obsMemList.get(i));
+								}
+								else if (comMem4 == null){
+									comMem4 = ((CompMember) obsMemList.get(i));
+								}
+								else if (comMem5 == null){
+									comMem5 = ((CompMember) obsMemList.get(i));
+								}
+								
+								else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem1.getTrainResults()[j].getTime()){
+									comMem5 = comMem4;
+									comMem4 = comMem3;
+									comMem3 = comMem2;
+									comMem2 = comMem1;
+									comMem1 = ((CompMember) obsMemList.get(i));
+								}
+								else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem2.getTrainResults()[j].getTime()){
+									comMem5 = comMem4;
+									comMem4 = comMem3;
+									comMem3 = comMem2;
+									comMem2 = ((CompMember) obsMemList.get(i));
+								}
+								else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem3.getTrainResults()[j].getTime()){
+									comMem5 = comMem4;
+									comMem4 = comMem3;
+									comMem3 = ((CompMember) obsMemList.get(i));
+								}
+								else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem4.getTrainResults()[j].getTime()){
+									comMem5 = comMem4;
+									comMem4 = ((CompMember) obsMemList.get(i));
+								}
+								else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem5.getTrainResults()[j].getTime()){
+									comMem5 = ((CompMember) obsMemList.get(i));
+								}
+							} 
 						}
-						else if (comMem2 == null){
-							comMem2 = ((CompMember) obsMemList.get(i));
-						}
-						else if (comMem3== null){
-							comMem3 = ((CompMember) obsMemList.get(i));
-						}
-						else if (comMem4 == null){
-							comMem4 = ((CompMember) obsMemList.get(i));
-						}
-						else if (comMem5 == null){
-							comMem5 = ((CompMember) obsMemList.get(i));
-						}
-						
-						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem1.getTrainResults()[j].getTime()){
-							comMem5 = comMem4;
-							comMem4 = comMem3;
-							comMem3 = comMem2;
-							comMem2 = comMem1;
-							comMem1 = ((CompMember) obsMemList.get(i));
-						}
-						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem2.getTrainResults()[j].getTime()){
-							comMem5 = comMem4;
-							comMem4 = comMem3;
-							comMem3 = comMem2;
-							comMem2 = ((CompMember) obsMemList.get(i));
-						}
-						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem3.getTrainResults()[j].getTime()){
-							comMem5 = comMem4;
-							comMem4 = comMem3;
-							comMem3 = ((CompMember) obsMemList.get(i));
-						}
-						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem4.getTrainResults()[j].getTime()){
-							comMem5 = comMem4;
-							comMem4 = ((CompMember) obsMemList.get(i));
-						}
-						else if (((CompMember) obsMemList.get(i)).getTrainResults()[j].getTime() < comMem5.getTrainResults()[j].getTime()){
-							comMem5 = ((CompMember) obsMemList.get(i));
-						}
-					} 
-				}}
+					}
+				}
 			}
+			if(comMem1 != null){
+				tempCompMemList.add(comMem1);
+			}
+			if(comMem2 != null){
+				tempCompMemList.add(comMem2);
+			}
+			if(comMem3 != null){
+					tempCompMemList.add(comMem3);
+			}
+			if(comMem4 != null){
+					tempCompMemList.add(comMem4);
+			}
+			if(comMem5 != null){
+				tempCompMemList.add(comMem5);
+			}
+			
+			top5List.setAll(tempCompMemList);
 		}
-		if(comMem1 != null){
-			tempCompMemList.add(comMem1);
-		}
-		if(comMem2 != null){
-			tempCompMemList.add(comMem2);
-		}
-		if(comMem3 != null){
-				tempCompMemList.add(comMem3);
-		}
-		if(comMem4 != null){
-				tempCompMemList.add(comMem4);
-		}
-		if(comMem5 != null){
-			tempCompMemList.add(comMem5);
+	
+		catch(NullPointerException e){
+			System.out.print(e.getMessage());
 		}
 		
-		top5List.setAll(tempCompMemList);
-	}
-
-	catch(NullPointerException e){
-		System.out.print(e.getMessage());
-	}
-	
 	}
 
 	public void ShowOpkraevKontigent(){

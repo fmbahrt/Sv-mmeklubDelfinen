@@ -1,5 +1,7 @@
 
 public enum SwimLength {
+	//Enum made by: Daniel-Matthias Holtti
+
 	HUNDRED (100), 
 	HUNDREDFIFTY(150), 
 	TWOHUNDRED(200);

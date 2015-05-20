@@ -3,11 +3,20 @@ import java.time.LocalDate;
 
 
 public class SwimResult implements Serializable {
+	/*
+	 * 
+	 * Class made by: Daniel-Matthias Holtti
+	 * 
+	 * Class is used for results. 
+	 * Results are stored in an array and an arraylist in the CompMember class
+	 * 
+	 */
+	
 	private double time;  // In seconds
 	private LocalDate date; // Format: 
 	private int place;  //What place they got in the vent
-	private Disciplin disciplin; 
-	private SwimLength length;
+	private Disciplin disciplin; //The discipline they are partaking in
+	private SwimLength length; // In meter
 	private String swimEvent; //Event name
 	
 	public SwimResult(){
