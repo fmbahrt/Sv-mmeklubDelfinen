@@ -108,23 +108,25 @@ public class Delfinen extends Application {
 		launch(args);
 		
 	}
-	/*Metoden bruges til at sikre sig at den ikke instantierer serMemList hvis der allerede er en fil.
-	 * Derved instantierer den kun serMemList hvis der ikke er en fil
-	 */
+	
 	public static void instantiatorList(){
-		/*if (fileHandler.getFile().exists()){
-			serList = fileHandler.read();
+		/*Metoden bruges til at sikre sig at den ikke instantierer serMemList hvis der allerede er en fil.
+		 * Derved instantierer den kun serMemList hvis der ikke er en fil
+		 */
+		
+		//Førstgangs opsætning.
+		if(fileHandler.read().getUserList().isEmpty()){
+			serList.addUserToList(new User("admin", "admin", UserType.ADMIN));
+			fileHandler.save(serList);
 		}
-		else{
-			serList = new SerializableList();
-		}*/
+		
 		serList = fileHandler.read();
 	}
 	
 	@Override
 	public void start(Stage Stage) throws Exception {	
 		window = Stage;
-		mainView();		
+		login();		
 	}
 	
 	public void mainView(){
@@ -518,8 +520,15 @@ public class Delfinen extends Application {
 			
 			fileHandler.save(serList);
 			mainView();
-			crtMemDialog.close();
 				
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Member Creation");
+			alert.setHeaderText("Member created!");
+			alert.setContentText("Member has been succesfully created!");
+			alert.showAndWait();
+			
+			crtMemDialog.close();
+			
 		}catch(NumberFormatException e){
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("NumberFormatException");

@@ -126,4 +126,5 @@ public class Member implements Serializable{
 	public void setPasMember(boolean paMember){
 		this.pasMember = paMember;
 	}
+
 }
